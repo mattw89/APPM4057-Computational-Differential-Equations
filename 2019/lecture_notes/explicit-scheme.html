@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>3.2 Explicit Scheme | Computational Differential Equations</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="3.2 Explicit Scheme | Computational Differential Equations" />
+  <meta property="og:type" content="book" />
+  
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="3.2 Explicit Scheme | Computational Differential Equations" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Dr. Matthew Woolway &amp; Krupa Prag" />
+
+
+<meta name="date" content="2019-11-12" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="matrix-method-eigenvalue-analysis.html"/>
+<link rel="next" href="fourier-transform.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">CDEs</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="course-outline.html"><a href="course-outline.html"><i class="fa fa-check"></i>Course Outline</a><ul>
+<li class="chapter" data-level="" data-path="course-outline.html"><a href="course-outline.html#staff-members"><i class="fa fa-check"></i>Staff Members</a></li>
+<li class="chapter" data-level="" data-path="course-outline.html"><a href="course-outline.html#timetable-for-lectures-and-tutorials"><i class="fa fa-check"></i>Timetable for Lectures and Tutorials</a></li>
+<li class="chapter" data-level="" data-path="course-outline.html"><a href="course-outline.html#communication"><i class="fa fa-check"></i>Communication</a></li>
+<li class="chapter" data-level="" data-path="course-outline.html"><a href="course-outline.html#course-background-goals-and-outcomes"><i class="fa fa-check"></i>Course Background, Goals and Outcomes</a></li>
+<li class="chapter" data-level="" data-path="course-outline.html"><a href="course-outline.html#assessment"><i class="fa fa-check"></i>Assessment</a></li>
+<li class="chapter" data-level="" data-path="course-outline.html"><a href="course-outline.html#tests"><i class="fa fa-check"></i>Tests</a></li>
+<li class="chapter" data-level="" data-path="course-outline.html"><a href="course-outline.html#examinations"><i class="fa fa-check"></i>Examinations</a></li>
+<li class="chapter" data-level="" data-path="course-outline.html"><a href="course-outline.html#hardware-requirements"><i class="fa fa-check"></i>Hardware Requirements</a></li>
+<li class="chapter" data-level="" data-path="course-outline.html"><a href="course-outline.html#other-information"><i class="fa fa-check"></i>Other Information</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Introduction</a><ul>
+<li class="chapter" data-level="1.1" data-path="conceptual-methodology.html"><a href="conceptual-methodology.html"><i class="fa fa-check"></i><b>1.1</b> Conceptual Methodology</a><ul>
+<li class="chapter" data-level="1.1.1" data-path="conceptual-methodology.html"><a href="conceptual-methodology.html#tutorial"><i class="fa fa-check"></i><b>1.1.1</b> Tutorial</a></li>
+</ul></li>
+<li class="chapter" data-level="1.2" data-path="sec-consis.html"><a href="sec-consis.html"><i class="fa fa-check"></i><b>1.2</b> Consistency</a><ul>
+<li class="chapter" data-level="1.2.1" data-path="sec-consis.html"><a href="sec-consis.html#tutorial-1"><i class="fa fa-check"></i><b>1.2.1</b> Tutorial</a></li>
+</ul></li>
+<li class="chapter" data-level="1.3" data-path="choice-of-trianglet-and-trianglex.html"><a href="choice-of-trianglet-and-trianglex.html"><i class="fa fa-check"></i><b>1.3</b> Choice of <span class="math inline">\(\triangle{t}\)</span> and <span class="math inline">\(\triangle{x}\)</span></a><ul>
+<li class="chapter" data-level="1.3.1" data-path="choice-of-trianglet-and-trianglex.html"><a href="choice-of-trianglet-and-trianglex.html#tutorial-2"><i class="fa fa-check"></i><b>1.3.1</b> Tutorial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="theorectical-considerations.html"><a href="theorectical-considerations.html"><i class="fa fa-check"></i><b>2</b> Theorectical Considerations</a><ul>
+<li class="chapter" data-level="2.1" data-path="convergence.html"><a href="convergence.html"><i class="fa fa-check"></i><b>2.1</b> Convergence</a></li>
+<li class="chapter" data-level="2.2" data-path="consistency.html"><a href="consistency.html"><i class="fa fa-check"></i><b>2.2</b> Consistency</a></li>
+<li class="chapter" data-level="2.3" data-path="stability.html"><a href="stability.html"><i class="fa fa-check"></i><b>2.3</b> Stability</a></li>
+<li class="chapter" data-level="2.4" data-path="the-lax-theorem.html"><a href="the-lax-theorem.html"><i class="fa fa-check"></i><b>2.4</b> The Lax Theorem</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="stability-1.html"><a href="stability-1.html"><i class="fa fa-check"></i><b>3</b> Stability</a><ul>
+<li class="chapter" data-level="3.1" data-path="matrix-method-eigenvalue-analysis.html"><a href="matrix-method-eigenvalue-analysis.html"><i class="fa fa-check"></i><b>3.1</b> Matrix method: eigenvalue analysis</a></li>
+<li class="chapter" data-level="3.2" data-path="explicit-scheme.html"><a href="explicit-scheme.html"><i class="fa fa-check"></i><b>3.2</b> Explicit Scheme</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="explicit-scheme.html"><a href="explicit-scheme.html#tutorial-3"><i class="fa fa-check"></i><b>3.2.1</b> Tutorial</a></li>
+</ul></li>
+<li class="chapter" data-level="3.3" data-path="fourier-transform.html"><a href="fourier-transform.html"><i class="fa fa-check"></i><b>3.3</b> Fourier Transform</a></li>
+<li class="chapter" data-level="3.4" data-path="von-neumann-stability-analysis.html"><a href="von-neumann-stability-analysis.html"><i class="fa fa-check"></i><b>3.4</b> Von Neumann Stability Analysis</a><ul>
+<li class="chapter" data-level="3.4.1" data-path="von-neumann-stability-analysis.html"><a href="von-neumann-stability-analysis.html#tutorial-4"><i class="fa fa-check"></i><b>3.4.1</b> Tutorial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="finite-difference-schemes-for-parabolic-pdes.html"><a href="finite-difference-schemes-for-parabolic-pdes.html"><i class="fa fa-check"></i><b>4</b> Finite Difference Schemes for Parabolic PDEs</a><ul>
+<li class="chapter" data-level="4.1" data-path="standard-finite-difference-schemes-for-parabolic-pdes.html"><a href="standard-finite-difference-schemes-for-parabolic-pdes.html"><i class="fa fa-check"></i><b>4.1</b> Standard Finite Difference Schemes for Parabolic PDEs</a><ul>
+<li class="chapter" data-level="4.1.1" data-path="standard-finite-difference-schemes-for-parabolic-pdes.html"><a href="standard-finite-difference-schemes-for-parabolic-pdes.html#sec:higherDer"><i class="fa fa-check"></i><b>4.1.1</b> Higher and Mixed Derivatives</a></li>
+<li class="chapter" data-level="4.1.2" data-path="standard-finite-difference-schemes-for-parabolic-pdes.html"><a href="standard-finite-difference-schemes-for-parabolic-pdes.html#sec:higherOrder"><i class="fa fa-check"></i><b>4.1.2</b> Higher Order Approximations</a></li>
+<li class="chapter" data-level="4.1.3" data-path="standard-finite-difference-schemes-for-parabolic-pdes.html"><a href="standard-finite-difference-schemes-for-parabolic-pdes.html#general-approach"><i class="fa fa-check"></i><b>4.1.3</b> General Approach</a></li>
+<li class="chapter" data-level="4.1.4" data-path="standard-finite-difference-schemes-for-parabolic-pdes.html"><a href="standard-finite-difference-schemes-for-parabolic-pdes.html#tutorial-5"><i class="fa fa-check"></i><b>4.1.4</b> Tutorial</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="sec-this.html"><a href="sec-this.html"><i class="fa fa-check"></i><b>4.2</b> Derivative Boundary Conditions</a></li>
+<li class="chapter" data-level="4.3" data-path="implicit-methods.html"><a href="implicit-methods.html"><i class="fa fa-check"></i><b>4.3</b> Implicit methods</a></li>
+<li class="chapter" data-level="4.4" data-path="crank-nicolson-method.html"><a href="crank-nicolson-method.html"><i class="fa fa-check"></i><b>4.4</b> Crank-Nicolson method</a><ul>
+<li class="chapter" data-level="4.4.1" data-path="crank-nicolson-method.html"><a href="crank-nicolson-method.html#tutorial-6"><i class="fa fa-check"></i><b>4.4.1</b> Tutorial</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="alternating-direction-implicit-adi-schemes.html"><a href="alternating-direction-implicit-adi-schemes.html"><i class="fa fa-check"></i><b>4.5</b> Alternating Direction Implicit (ADI) Schemes</a><ul>
+<li class="chapter" data-level="4.5.1" data-path="alternating-direction-implicit-adi-schemes.html"><a href="alternating-direction-implicit-adi-schemes.html#motivation-for-adi"><i class="fa fa-check"></i><b>4.5.1</b> Motivation for ADI</a></li>
+<li class="chapter" data-level="4.5.2" data-path="alternating-direction-implicit-adi-schemes.html"><a href="alternating-direction-implicit-adi-schemes.html#peaceman-rachford-scheme"><i class="fa fa-check"></i><b>4.5.2</b> Peaceman-Rachford scheme</a></li>
+<li class="chapter" data-level="4.5.3" data-path="alternating-direction-implicit-adi-schemes.html"><a href="alternating-direction-implicit-adi-schemes.html#the-adi-stencils"><i class="fa fa-check"></i><b>4.5.3</b> The ADI Stencils</a></li>
+<li class="chapter" data-level="4.5.4" data-path="alternating-direction-implicit-adi-schemes.html"><a href="alternating-direction-implicit-adi-schemes.html#stability-2"><i class="fa fa-check"></i><b>4.5.4</b> Stability</a></li>
+<li class="chapter" data-level="4.5.5" data-path="alternating-direction-implicit-adi-schemes.html"><a href="alternating-direction-implicit-adi-schemes.html#tutorial-7"><i class="fa fa-check"></i><b>4.5.5</b> Tutorial</a></li>
+<li class="chapter" data-level="4.5.6" data-path="alternating-direction-implicit-adi-schemes.html"><a href="alternating-direction-implicit-adi-schemes.html#consistency-1"><i class="fa fa-check"></i><b>4.5.6</b> Consistency</a></li>
+</ul></li>
+<li class="chapter" data-level="4.6" data-path="douglas-rachford-scheme.html"><a href="douglas-rachford-scheme.html"><i class="fa fa-check"></i><b>4.6</b> Douglas-Rachford scheme</a><ul>
+<li class="chapter" data-level="4.6.1" data-path="douglas-rachford-scheme.html"><a href="douglas-rachford-scheme.html#tutorial-8"><i class="fa fa-check"></i><b>4.6.1</b> Tutorial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="finite-difference-schemes-for-hyperbolic-pdes.html"><a href="finite-difference-schemes-for-hyperbolic-pdes.html"><i class="fa fa-check"></i><b>5</b> Finite Difference Schemes for Hyperbolic PDEs</a><ul>
+<li class="chapter" data-level="5.1" data-path="lax-wendroff-scheme.html"><a href="lax-wendroff-scheme.html"><i class="fa fa-check"></i><b>5.1</b> Lax-Wendroff Scheme</a><ul>
+<li class="chapter" data-level="5.1.1" data-path="lax-wendroff-scheme.html"><a href="lax-wendroff-scheme.html#tutorial-9"><i class="fa fa-check"></i><b>5.1.1</b> Tutorial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="finite-difference-schemes-for-elliptic-pdes.html"><a href="finite-difference-schemes-for-elliptic-pdes.html"><i class="fa fa-check"></i><b>6</b> Finite Difference Schemes for Elliptic PDEs</a></li>
+<li class="chapter" data-level="" data-path="references.html"><a href="references.html"><i class="fa fa-check"></i>References</a></li>
+<li class="divider"></li>
+<li><a href="https://www.wits.ac.za/csam" target="blank">University of the Witwatersrand</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Computational Differential Equations</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="explicit-scheme" class="section level2">
+<h2><span class="header-section-number">3.2</span> Explicit Scheme</h2>
+<p>Consider the explicit difference scheme</p>
+<p><span class="math display">\[\begin{equation}
+u_n^{m+1} = \beta  u_{n+1}^m + (1 - 2 \beta ) u_n^m + \beta  u_{n-1}^m
+\end{equation}\]</span>
+where <span class="math inline">\(\beta = \frac{{\triangle t}}{{\triangle x}^2}\)</span> to form the following system
+<span class="math display">\[\begin{equation*}
+\left(
+\begin{array}{c}
+u_1^{m+1}  \\
+u_2^{m+1} \\
+\vdots  \\
+\vdots \\
+\vdots \\
+u_{N-1}^{m+1}
+\end{array} \right)
+\end{equation*}\]</span></p>
+<p><span class="math display">\[\begin{equation*}
+ = \left(
+\begin{array}{ccccccc}
+\beta &amp; (1-2\beta ) &amp; \beta  &amp; \ldots  &amp; \ldots &amp; \ldots &amp; \ldots \\
+0 &amp; \beta  &amp; (1-2\beta )&amp; \beta  &amp; \ldots &amp; \ldots &amp; \ldots \\
+\ldots &amp;\ldots &amp; \ddots &amp; \ddots  &amp; \ddots &amp; \ldots &amp; \ldots \\
+\ldots &amp;\ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots &amp;   \ldots \\
+ \ldots &amp;\ldots &amp;  \ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots \\
+ \ldots &amp;\ldots &amp; \ldots &amp;  \beta&amp; (1-2\beta )&amp; \beta  &amp; 0\\
+\ldots &amp; \ldots &amp;  \ldots &amp; \ldots &amp; \beta  &amp; (1-2\beta ) &amp; \beta
+\end{array} \right) \qquad
+\left(
+\begin{array}{c}
+u_0^{m}  \\
+u_1^{m} \\
+\vdots \\
+\vdots \\
+\vdots \\
+u_N^{m}
+\end{array} \right).
+\end{equation*}\]</span>
+If we include the boundary conditions <span class="math inline">\(u_0^m = u_N^m = 0\)</span> for all <span class="math inline">\(m\)</span> it produces the system
+<span class="math display">\[\begin{equation*}
+\left(
+\begin{array}{c}
+u_1^{m+1}  \\
+u_2^{m+1} \\
+\vdots  \\
+\vdots \\
+\vdots \\
+u_{N-1}^{m+1}
+\end{array} \right)
+\end{equation*}\]</span></p>
+<p><span class="math display">\[\begin{equation*}
+ = \left(
+\begin{array}{ccccccc}
+(1-2\beta ) &amp; \beta  &amp; \ldots  &amp; \ldots &amp; \ldots &amp; \ldots &amp; \ldots \\
+\beta  &amp; (1-2\beta )&amp; \beta  &amp; \ldots &amp; \ldots &amp; \ldots &amp; \ldots\\
+\ldots &amp;\ldots &amp; \ddots &amp; \ddots  &amp; \ddots &amp; \ldots &amp; \ldots \\
+\ldots &amp;\ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots &amp;   \ldots \\
+ \ldots &amp;\ldots &amp;  \ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots \\
+ \ldots &amp;\ldots &amp;\ldots &amp; \ldots &amp;  \beta &amp; (1-2\beta )&amp; \beta\\
+\ldots &amp; \ldots &amp; \ldots &amp;  \ldots &amp; \ldots &amp; \beta  &amp; (1-2\beta )
+\end{array} \right) \qquad
+\left(
+\begin{array}{c}
+u_1^{m}  \\
+u_2^{m} \\
+\vdots \\
+\vdots \\
+\vdots \\
+u_{N-1}^{m}
+\end{array} \right)
+\end{equation*}\]</span>
+hence
+<span class="math display">\[\begin{equation}
+\underline{v}^{m+1} = A \underline{v}^m
+\end{equation}\]</span>
+where <span class="math inline">\(A = I - \beta C\)</span> with
+<span class="math display">\[\begin{equation*}
+C = \left(
+\begin{array}{ccccccc}
+2 &amp; -1 &amp; \ldots  &amp; \ldots &amp; \ldots &amp; \ldots &amp; \ldots \\
+-1  &amp; 2&amp; -1  &amp; \ldots &amp; \ldots &amp; \ldots &amp; \ldots\\
+\ldots &amp;\ldots &amp; \ddots &amp; \ddots  &amp; \ddots &amp; \ldots &amp; \ldots \\
+\ldots &amp;\ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots &amp;   \ldots \\
+ \ldots &amp;\ldots &amp;  \ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots \\
+ \ldots &amp;\ldots &amp;\ldots &amp; \ldots &amp;  -1 &amp; 2 &amp; -1\\
+\ldots &amp; \ldots &amp; \ldots &amp;  \ldots &amp; \ldots &amp; -1  &amp; 2
+\end{array} \right).
+\end{equation*}\]</span></p>
+<p>Let <span class="math inline">\(\underline{v}^m\)</span> be the exact solution of the difference equations and <span class="math inline">\(\underline{u}^m\)</span> be the calculated solution of the difference equations.</p>
+<p>Define the error vector to be
+<span class="math display">\[\underline{e}^m = \underline{v}^m - \underline{u}^m.\]</span>
+Assume that we make <strong>only one</strong> initial error <span class="math inline">\(\underline{e}^0\)</span> then the calculated values are also found from <a href="matrix-method-eigenvalue-analysis.html#eq:me3">(3.4)</a>
+<span class="math display">\[\underline{u}^{m+1} = A \underline{u}^{m} + \underline{b}\]</span>
+and since
+<span class="math display">\[ \underline{v}^{m+1} = A \underline{v}^{m} + \underline{b}\]</span>
+we find that
+<span class="math display">\[\underline{e}^{m+1} = \underline{v}^{m+1} - \underline{u}^{m+1} = A \underline{v}^{m} + \underline{b} - (A \underline{u}^{m} + \underline{b})\]</span>
+<span class="math display" id="eq:es4">\[\begin{equation}
+= A \underline{e}^m.
+\tag{3.5}
+\end{equation}\]</span>
+Assuming that all the eigenvalues of <span class="math inline">\(A\)</span> are distinct we can write the initial error
+<span class="math display" id="eq:es5">\[\begin{equation}
+\underline{e}^{0} = \sum_{n=0}^{N} a_n \gamma_n
+\tag{3.6}
+\end{equation}\]</span>
+where the <span class="math inline">\(a_n\)</span>’s are some constants and the <span class="math inline">\(\gamma_n\)</span>’s are the linearly independent eigenvectors corresponding to the eigenvalues <span class="math inline">\(\lambda _n\)</span>.</p>
+<p>From <a href="explicit-scheme.html#eq:es4">(3.5)</a> we know that <span class="math inline">\(\underline{e}^m = A^m \underline{e}^0\)</span> so from <a href="explicit-scheme.html#eq:es5">(3.6)</a> we have found that
+<span class="math display">\[\underline{e}^m = \sum_{n=0}^{N} a_n \lambda _n^m \gamma_n\]</span>
+and so the error vector remains bounded if and only of the eigenvalues of <span class="math inline">\(A\)</span> have absolute value <span class="math inline">\(\leq 1\)</span>, i.e. <strong>the method is stable if the eigenvalue, of the matrix, of largest absolute magnitude does not exceed <span class="math inline">\(1\)</span></strong>.</p>
+<p><em>See Burden &amp; Faires pg 706 - 707</em></p>
+
+<div class="example">
+<p><span id="exm:unnamed-chunk-18" class="example"><strong>Example 3.2  </strong></span>Consider the matrix discussed above from the explicit scheme</p>
+<p><span class="math display">\[\begin{equation*}
+A = \left(
+\begin{array}{ccccccc}
+(1-2\beta ) &amp; \beta  &amp; \ldots  &amp; \ldots &amp; \ldots &amp; \ldots &amp; \ldots \\
+\beta  &amp; (1-2\beta )&amp; \beta  &amp; \ldots &amp; \ldots &amp; \ldots &amp; \ldots\\
+\ldots &amp;\ldots &amp; \ddots &amp; \ddots  &amp; \ddots &amp; \ldots &amp; \ldots \\
+\ldots &amp;\ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots &amp;   \ldots \\
+ \ldots &amp;\ldots &amp;  \ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots \\
+ \ldots &amp;\ldots &amp;\ldots &amp; \ldots &amp;  \beta &amp; (1-2\beta )&amp; \beta\\
+\ldots &amp; \ldots &amp; \ldots &amp;  \ldots &amp; \ldots &amp; \beta  &amp; (1-2\beta )
+\end{array} \right)
+\end{equation*}\]</span></p>
+<p>which is an <span class="math inline">\((N-1)\times (N-1)\)</span> matrix with eigenvalues
+<span class="math display">\[\lambda _n = (1 - 2 \beta ) + 2 \sqrt{(\beta ^2)} \cos \left(\frac{n\pi }{N} \right)\]</span>
+<span class="math display">\[ = 1-2\beta  +2\beta \cos \left(\frac{n\pi }{N} \right).\]</span>
+So for stability we require, for <span class="math inline">\(n = 1,2,...,(N-1)\)</span>, such that
+<span class="math display">\[|1-2\beta  + 2\beta \cos \left(\frac{n\pi }{N} \right)| \leq  1\]</span>
+<span class="math display">\[\begin{equation}
+-1\leq \left( 1-2\beta  + 2\beta \cos \left(\frac{n\pi }{N} \right) \right) \leq  1
+\end{equation}\]</span>
+giving that
+<span class="math display">\[1-2\beta  + 2\beta \cos \left(\frac{n\pi }{N} \right) \geq  -1\]</span>
+<span class="math display">\[-2\beta  + 2\beta \cos \left(\frac{n\pi }{N} \right) \geq  -2\]</span>
+<span class="math display">\[\beta \left(1-\cos \left(\frac{n\pi }{N} \right) \right) \leq 1\]</span>
+<span class="math display" id="eq:es6">\[\begin{equation}
+\beta \left(2 \sin^2 \left(\frac{n\pi }{2N} \right) \right) \leq 1
+\tag{3.7}
+\end{equation}\]</span>
+for all <span class="math inline">\(n\)</span>, and</p>
+<p><span class="math display">\[1-2\beta  + 2\beta \cos \left(\frac{n\pi }{N} \right) \leq  1\]</span>
+<span class="math display">\[-2\beta  + 2\beta \cos \left(\frac{n\pi }{N} \right) \leq  0\]</span>
+<span class="math display">\[\beta \left(1-\cos \left(\frac{n\pi }{N} \right) \right) \geq  0\]</span>
+<span class="math display" id="eq:es7">\[\begin{equation}
+\beta \left(2 \sin^2 \left(\frac{n\pi }{2N} \right) \right) \geq  0
+\tag{3.8}
+\end{equation}\]</span>
+for all <span class="math inline">\(n\)</span>.</p>
+Since stability requires <a href="explicit-scheme.html#eq:es6">(3.7)</a> and <a href="explicit-scheme.html#eq:es7">(3.8)</a> to hold as <span class="math inline">\(N\rightarrow \infty\)</span> the fact that
+<span class="math display">\[\lim_{N\rightarrow \infty} \left[\sin^2 \left(\frac{(N-1)\pi }{2N} \right) \right] = 1\]</span>
+means that from <a href="explicit-scheme.html#eq:es6">(3.7)</a> and <a href="explicit-scheme.html#eq:es7">(3.8)</a> we find that stability will only occur if
+<span class="math display">\[\begin{equation}
+0 \leq \beta \leq \frac{1}{2}.
+\end{equation}\]</span>
+This gives us a necessary and sufficient condition for stability for the method <span class="math inline">\(\underline{u}^{m+1} = A \underline{u}^{m}.\)</span>
+</div>
+
+<p>In the next example we consider the case where we have derivative boundary conditions. Remember that earlier it was indicated that we could not determine <span class="math inline">\(u_0^1\)</span> and <span class="math inline">\(u_N^1\)</span> from equation <a href="conceptual-methodology.html#eq:11">(1.11)</a> since one of the subscripts <span class="math inline">\(N+1\)</span> and <span class="math inline">\(-1\)</span> would reach out of bounds for either of the calculations. It is under such circumstances - where <span class="math inline">\(u_0^1\)</span> and <span class="math inline">\(u_N^1\)</span> cannot be obtained from the usual boundary conditions - that derivative boundary conditions become useful.</p>
+
+<div class="example">
+<p><span id="exm:unnamed-chunk-19" class="example"><strong>Example 3.3  </strong></span>Examine the stability of the explicit central difference scheme applied to
+<span class="math display">\[u_t = u_{xx} \qquad x \in [0,1]\]</span>
+<span class="math display">\[u_x(0,t) = a_1 (u(0,t) - b_1)\]</span>
+<span class="math display">\[\begin{equation}
+u_x(1,t) = -a_2 (u(1,t) - b_2)
+\end{equation}\]</span>
+where <span class="math inline">\(a_1, a_2 &gt;0\)</span>. Using <span class="math inline">\(u_n^{m+1} = \beta u_{n+1}^m + (1 - 2 \beta ) u_n^m + \beta u_{n-1}^m\)</span> and
+<span class="math display">\[\frac{u_1^m - u_{-1}^m}{2{\triangle x}} = a_1(u_0^m - b_1) \qquad a_1&gt;0\]</span>
+<span class="math display">\[\begin{equation}
+\frac{u_{N+1}^m - u_{N-1}^m}{2{\triangle x}} = -a_2(u_N^m - b_2) \qquad a_2&gt;0
+\end{equation}\]</span>
+we obtain for the boundaries
+<span class="math display">\[u_0^{m+1} = \beta u_{1}^m + (1 - 2 \beta ) u_0^m + \beta  u_{-1}^m\]</span>
+<span class="math display">\[\beta (u_1^m - 2ha_1(u_0^m-b_1)) +(1-2 \beta)u_0^m + \beta u_1^m\]</span>
+<span class="math display">\[\begin{equation}
+u_0^m(1-2\beta-2{\triangle x}\beta a_1) + 2 \beta u_1^m + 2{\triangle x} \beta a_1b_1
+\end{equation}\]</span>
+and similarly
+<span class="math display">\[\begin{equation}
+u_N^{m+1} = u_{N}^m(1-2\beta-2{\triangle x}\beta a_2) + 2 \beta u_{N-1}^m + 2{\triangle x} \beta a_2b_2.
+\end{equation}\]</span>
+As such we get the system <span class="math inline">\({\underline u}^{m+1} = A {\underline u}^m + {\underline b}\)</span> where
+<span class="math display">\[\begin{equation*}
+A = \left(
+\begin{array}{ccccccc}
+(1-2\beta(1+a_1{\triangle x}) ) &amp; 2\beta  &amp; \ldots  &amp; \ldots &amp; \ldots &amp; \ldots &amp; \ldots \\
+\beta  &amp; (1-2\beta )&amp; \beta  &amp; \ldots &amp; \ldots &amp; \ldots &amp; \ldots\\
+\ldots &amp;\ldots &amp; \ddots &amp; \ddots  &amp; \ddots &amp; \ldots &amp; \ldots \\
+\ldots &amp;\ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots &amp;   \ldots \\
+ \ldots &amp;\ldots &amp;  \ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots \\
+ \ldots &amp;\ldots &amp;\ldots &amp; \ldots &amp;  \beta &amp; (1-2\beta )&amp; \beta\\
+\ldots &amp; \ldots &amp; \ldots &amp;  \ldots &amp; \ldots &amp; 2\beta  &amp; (1-2\beta(1+a_2{\triangle x}) )
+\end{array} \right)\qquad
+{\underline b} = \left(
+\begin{array}{c}
+2\beta a_1b_1{\triangle x}  \\
+0 \\
+\vdots \\
+\vdots \\
+0 \\
+2\beta a_2b_2{\triangle x}
+\end{array} \right)
+\end{equation*}\]</span></p>
+<p>which means that we only need to look at the matrix since this last vector is constant.</p>
+<p>The matrix has the form <span class="math inline">\(I-\beta C\)</span> where</p>
+<p><span class="math display">\[\begin{equation*}
+C = \left(
+\begin{array}{ccccccc}
+2(1+a_1{\triangle x} ) &amp; -2 &amp; \ldots  &amp; \ldots &amp; \ldots &amp; \ldots &amp; \ldots \\
+-1  &amp; 2&amp; -1 &amp; \ldots &amp; \ldots &amp; \ldots &amp; \ldots\\
+\ldots &amp;\ldots &amp; \ddots &amp; \ddots  &amp; \ddots &amp; \ldots &amp; \ldots \\
+\ldots &amp;\ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots &amp;   \ldots \\
+ \ldots &amp;\ldots &amp;  \ldots &amp; \ldots &amp; \ddots &amp; \ddots &amp; \ddots \\
+ \ldots &amp;\ldots &amp;\ldots &amp; \ldots &amp;  -1  &amp; 2&amp; -1\\
+\ldots &amp; \ldots &amp; \ldots &amp;  \ldots &amp; \ldots &amp; -2  &amp; 2(1+a_2{\triangle x} )
+\end{array} \right)
+\end{equation*}\]</span></p>
+<p>of which we need to find the eigenvalues. We will need to use Gerschgorin’s <a href="https://moodle.ms.wits.ac.za/~matt/APPM3017_Numerical_Analysis/algebraic-eigenvalue-problem.html#eigenvalues-eigenvectors-linear-algebra">theorem</a> (see your third-year notes) which means that any eigenvalue <span class="math inline">\(\lambda\)</span> of <span class="math inline">\(C\)</span> satisfies at least one of the following conditions:</p>
+<ol style="list-style-type: decimal">
+<li><span class="math inline">\(|\lambda - 2(1+a_1{\triangle x})| &lt;2\)</span>,</li>
+<li><span class="math inline">\(|\lambda-2|&lt;2\)</span>,</li>
+<li><span class="math inline">\(|\lambda - 2(1+a_2{\triangle x})|&lt;2.\)</span></li>
+</ol>
+<p>This gives three possible intervals for <span class="math inline">\(\lambda\)</span> but since the eigenvalues of <span class="math inline">\(I-\beta C\)</span> are <span class="math inline">\(1-\beta \lambda\)</span> we require that <span class="math inline">\(|1-\beta \lambda|&lt;1\)</span> which means that <span class="math inline">\(0&lt;\beta \lambda &lt;2\)</span>. But from these intervals we see that <span class="math inline">\(\lambda \in (0, \max\{(4+2a_1{\triangle x})\beta;(4+2a_2{\triangle x}) \beta\})\)</span> so we require that <span class="math inline">\(\max\{(4+2a_1{\triangle x})\beta;(4+2a_2{\triangle x}) \beta\}&lt;2\)</span> and so for stability we must have that</p>
+<span class="math display">\[\begin{equation}
+\beta&lt; \min\bigg\lbrace\frac{1}{2+a_1{\triangle x}};\frac{1}{2+a_2{\triangle x}}\bigg\rbrace.
+\end{equation}\]</span>
+</div>
+
+<div id="tutorial-3" class="section level3">
+<h3><span class="header-section-number">3.2.1</span> Tutorial</h3>
+<p>Implement the <em>implicit</em> finite difference method on <span class="math inline">\(u_t=u_{xx}\)</span> with the boundary conditions <span class="math inline">\(u(x,t) = u(1,t) = 0\)</span> and prove that the method is unconditionally stable.</p>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="matrix-method-eigenvalue-analysis.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="fourier-transform.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": ["CDEs_2019.pdf", "CDEs_2019.epub"],
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
